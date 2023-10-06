@@ -20,6 +20,7 @@ const NotFound = require("./components/notfound.jsx");
 //Typescript Component
 import { MyName } from './components/typescript_comp';
 import { PopularBooks } from './components/popular_books_comp';
+import { TopStories } from "./components/top_stories";
 import { AboutProject } from './components/aboutProject';
 
 //SCSS styles
@@ -46,6 +47,7 @@ ReactDOM.createRoot(
                         <Route path="*" element={<MyName />} />
                         <Route path="popular_articles" element={<MyName />} />
                         <Route path="popular_books" element={<PopularBooks />} />
+                        <Route path="top_stories" element={<TopStories />} />
                         <Route path="about" element={<AboutProject />} />
 
 

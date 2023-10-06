@@ -6,6 +6,7 @@ function Navigator() {
         <nav>
             <Link className={'links'} to="/popular_articles">Popular Articles</Link>
             <Link className={'links'}  to="/popular_books">Books Best Sellers</Link>
+            <Link className={'links'}  to="/top_stories">Top Stories</Link>
             <Link className={'links'}  to="/about">About</Link>
         </nav>
     );
