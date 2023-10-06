@@ -31,6 +31,9 @@ function MyName() {
         try {
             const response = await fetch(link);
             const responseText = await response.json();
+
+            console.log(responseText);
+
             dispatch({ type: "ADD_ART_INFO", data: responseText });
         } catch (e) {
             console.log("Error loading data!");
@@ -56,7 +59,6 @@ function MyName() {
             return false;
         }
 
-        
         const data = loadedContent.results.map((item: any, id: number) =>
 
             <div style={{ border: "red 1px solid", margin: "20px 0", width: "500px" }} key={id}>
@@ -65,7 +67,8 @@ function MyName() {
                 <p><b>Автор:</b> {item.byline}</p>
                 <p><b>Дата публикации:</b> {item.published_date}</p>
                 <img src={item.media[0] ? item.media[0]["media-metadata"][2].url : "https://www.buhuslugi.by/wp-content/themes/consultix/images/no-image-found-360x250.png"} alt="News Picture" />
-                <br />
+                <p>{item.media[0] ? item.media[0].caption : false}</p>
+                <p>Автор фото: {item.media[0] ? item.media[0].copyright : false}</p>
                 <a target="_blank" href={item.url}>Читать далее</a>
             </div>);
 
@@ -93,6 +96,7 @@ function MyName() {
     return (
         <div>
             <br />
+            <h4>The most popular articles on NYTimes.com based on emails & shares.</h4>
             <form ref={table}>Наиболее популярные новости за период:
                 <p>Источник информации:</p>
                 <button type='button' onClick={loadDataByButton} className="source" id='Email'>По Email</button>
