@@ -1,4 +1,4 @@
-const React = require("react");
+
 import {Link} from "react-router-dom";
 
 function Navigator() {
@@ -12,4 +12,4 @@ function Navigator() {
     );
 }
 
-export default Navigator;
+export { Navigator };

@@ -12,16 +12,14 @@ import { Provider } from 'react-redux';
 import { Store } from './reduxStore/store';
 
 //Components
-import Header from "./components/header.jsx";
-import Navigator from "./components/navigation.jsx";
-const Article = require("./components/article.jsx");
-const NotFound = require("./components/notfound.jsx");
+
 
 //Typescript Component
 import { MyName } from './components/typescript_comp';
 import { PopularBooks } from './components/popular_books_comp';
 import { TopStories } from "./components/top_stories";
 import { AboutProject } from './components/aboutProject';
+import {Navigator} from "./components/navigation";
 
 //SCSS styles
 import './src/scss/main.scss'
