@@ -27,7 +27,7 @@ function MyName() {
     loadDataStatus ? false : loadData(1);
 
     //Request Layout
-    async function toAPiQuery(link:any) {
+    async function toAPiQuery(link: any) {
         try {
             const response = await fetch(link);
             const responseText = await response.json();
@@ -54,22 +54,23 @@ function MyName() {
 
     function drawData(): any {
 
-        if(loadedContent == false) {
+        if (loadedContent == false) {
             console.log("Data rendering error! drawData Function.");
             return false;
         }
 
         const data = loadedContent.results.map((item: any, id: number) =>
 
-            <div style={{ border: "red 1px solid", margin: "20px 0", width: "500px" }} key={id}>
-                <p><b>Заголовок:</b> {item.title}</p>
-                <p><b>Описание:</b> {item.abstract}</p>
-                <p><b>Автор:</b> {item.byline}</p>
-                <p><b>Дата публикации:</b> {item.published_date}</p>
+            <div className="article" key={id}>
+                <div className="articleId"><p>#{id + 1}</p></div>
+                <h1>{item.title}</h1>
+                <p className="leadText">{item.abstract}</p>
+                <p className='pubDate'>Published: {item.published_date.split("-").reverse().join('.')}</p>
+                <p className="pubAuth">{item.byline}</p>
                 <img src={item.media[0] ? item.media[0]["media-metadata"][2].url : "https://www.buhuslugi.by/wp-content/themes/consultix/images/no-image-found-360x250.png"} alt="News Picture" />
-                <p>{item.media[0] ? item.media[0].caption : false}</p>
-                <p>Автор фото: {item.media[0] ? item.media[0].copyright : false}</p>
-                <a target="_blank" href={item.url}>Читать далее</a>
+                <p className="picDesc"><i>{item.media[0] ? item.media[0].caption : false}</i></p>
+                <p className="author">Photo: {item.media[0] ? item.media[0].copyright : false}</p>
+                <a target="_blank" href={item.url}><button type="button">Read more</button></a>
             </div>);
 
         return data;
@@ -94,18 +95,18 @@ function MyName() {
     }
 
     return (
-        <div>
-            <br />
-            <h4>The most popular articles on NYTimes.com based on emails & shares.</h4>
-            <form ref={table}>Наиболее популярные новости за период:
-                <p>Источник информации:</p>
-                <button type='button' onClick={loadDataByButton} className="source" id='Email'>По Email</button>
-                <button type='button' onClick={loadDataByButton} className="source" id='FB'>Из Facebook</button>
+        <div className="popularArticles">
+            <h1 className="pageTitle">The most popular articles on NYTimes.com based on emails & shares</h1>
+            <form className="formInfo" ref={table}>
+                <p>Selected source of information: <b>{source}</b></p>
+                <p>Choose another: </p>
+                <button type='button' onClick={loadDataByButton} className="source" id='FB'>Most shared on Facebook</button>
+                <button type='button' onClick={loadDataByButton} className="source" id='Email'>Most emailed articles</button>              
                 <br />
 
-                <p>Просматриваем: {source}</p>
                 <div className="days">
                     <div className="col">
+                        <p>For the last day:</p>
                         <div className="rate">
                             <input type="radio" value="1" onChange={handleDays} checked={days === '1'} />
                             <label htmlFor="1" title="text">1 day</label>
@@ -120,8 +121,9 @@ function MyName() {
                 </div>
             </form>
 
-            {loadedContent ? drawData() : "Данные загружаются! Если в течении 5 секунд данные не загрузились, перезагрузите страницу!"}
-
+            <div className="articleContainer">
+                {loadedContent ? drawData() : <p className="dataLoadingError">Data is loading... Reload the page if no information appears after 5 seconds.</p>}
+            </div>
         </div>
     )
 }

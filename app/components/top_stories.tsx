@@ -32,17 +32,16 @@ function TopStories() {
 
         const data = articles.results.map((item: any, id: number) =>
 
-            <div style={{ border: "red 1px solid", margin: "20px 0", width: "500px" }} key={id}>
-                <p><b>Заголовок:</b> {item.title}</p>
-                <p><b>Описание:</b> {item.abstract}</p>
-                <p><b>Автор:</b> {item.byline}</p>
-                <p><b>Дата публикации:</b> {item.published_date}</p>
-                <img style={{ width: "100%" }} src={item.multimedia ? item.multimedia[1].url : "https://www.buhuslugi.by/wp-content/themes/consultix/images/no-image-found-360x250.png"} alt="News Picture" />
-                <p>
-                    Picture description: {item.multimedia ? item.multimedia[1].caption : false}
-                    Copyright: {item.multimedia ? item.multimedia[1].copyright : false}
-                </p>
-                <a target="_blank" href={item.url}>Читать далее</a>
+            <div className="article" key={id}>
+                <div className="articleId"><p>#{id + 1}</p></div>
+                <h1>{item.title}</h1>
+                <p className="leadText"> {item.abstract}</p>
+                <p className='pubDate'>Published: {item.published_date.slice(0,10).split("-").reverse().join('.')}</p>
+                <p className="pubAuth">{item.byline}</p>
+                <img src={item.multimedia ? item.multimedia[1].url : "https://www.buhuslugi.by/wp-content/themes/consultix/images/no-image-found-360x250.png"} alt="News Picture" />
+                <p className="picDesc"><i>{item.multimedia ? item.multimedia[1].caption : false}</i></p>
+                <p className="author"> {item.multimedia ? item.multimedia[1].copyright : false}</p>
+                <a target="_blank" href={item.url}><button type="button">Read more</button></a>
             </div>);
 
         return data;
@@ -51,17 +50,19 @@ function TopStories() {
 
 
     return (
-        <div>
-            <h3>Top Stories of articles currently on the specified section</h3>
-            <label htmlFor="fiction">Select section:</label><br />
-            <select onChange={changeField} id="fiction" defaultValue="sports" name="fiction">
-                {themes.map((item, index) =>
-                    <option key={index} value={item}>{item}</option>
-                )}
-            </select>
+        <div className="popularArticles">
+            <h1 className="pageTitle">Top Stories of articles currently on the specified section</h1>
+            <form className="formInfo">
+                <label htmlFor="fiction">Select the specified section from the list: </label><br />
+                <select className='selectTheme' onChange={changeField} id="fiction" defaultValue="sports" name="fiction">
+                    {themes.map((item, index) =>
+                        <option key={index} value={item}>{item}</option>
+                    )}
+                </select>
+            </form>
 
-            <div>
-                {data ? drawHTML(popArticles) : "Данные загружаются!"}
+            <div className="articleContainer">
+                {data ? drawHTML(popArticles) : <p className="dataLoadingError">Data is loading... Reload the page if no information appears after 5 seconds.</p>}
             </div>
         </div>
     );

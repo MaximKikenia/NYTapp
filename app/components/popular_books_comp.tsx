@@ -43,14 +43,16 @@ function PopularBooks() {
 
         console.log(books);
 
-        let dataBooks = books.results.books.map((item: any, index: number) =>
-            <div style={{ border: "red 1px solid", margin: "20px 0", width: "500px" }} key={index}>
-                <p>Название: {item.title}</p>
-                <p>Описание: {item.description}</p>
-                <p>Автор: {item.author}</p>
-                <p>Опубликовано: {item.publisher}</p>
-                <img src={item.book_image ? item.book_image : false} alt="Book Image" />
-                <div>
+        let dataBooks = books.results.books.map((item: any, id: number) =>
+            <div className="article" key={id}>
+                <div className="articleId"><p>#{id + 1}</p></div>
+                <h1>{item.title}</h1>
+                <p className="leadText">{item.description}</p>
+                <p>Author: <b>{item.author}</b></p>
+                <p className='pubDate'>Publisher: <b>{item.publisher}</b></p>
+                <img className="bookImg" src={item.book_image ? item.book_image : false} alt="Book Image" />
+                <p><b>List of stores:</b></p>
+                <div className="storeList">
                     {item.buy_links.map((itemShop: any, indexShop: number) =>
                         <div key={indexShop}>
                             <a target="_blank" href={itemShop.url}>{itemShop.name}</a>
@@ -64,24 +66,23 @@ function PopularBooks() {
     }
 
     return (
-        <div>
-            <br />
-            <label htmlFor="fiction">Выберите вымысел:</label><br /><br />
-            <select ref={selectList} id="fiction" defaultValue="hardcover-fiction" name="fiction">
-                <option value="combined-print-and-e-book-fiction">Combined Print & E-Book Fiction</option>
-                <option value="hardcover-fiction">Hardcover Fiction</option>
-                <option value="trade-fiction-paperback">Paperback Trade Fiction</option>
-            </select>
+        <div className="popularArticles">
+            <h1 className="pageTitle">The New York Times Best Sellers Books lists</h1>
+            <form className="formInfo">
+                <label htmlFor="fiction">Select a fiction from the list:</label>
+                <select className='selectTheme' ref={selectList} id="fiction" defaultValue="hardcover-fiction" name="fiction">
+                    <option value="combined-print-and-e-book-fiction">Combined Print & E-Book Fiction</option>
+                    <option value="hardcover-fiction">Hardcover Fiction</option>
+                    <option value="trade-fiction-paperback">Paperback Trade Fiction</option>
+                </select>
 
-            <br /><br />
-            <label htmlFor="date">По дате: </label>
-            <input ref={dateInp} type="date" defaultValue={currenDay} id="date" name="date" />
-            <br /><br />
+                <label htmlFor="date">Select date: </label>
+                <input ref={dateInp} type="date" defaultValue={currenDay} id="date" name="date" /><br />
+                <button className="showResButton" type="button" onClick={drawBestSellersByFilter}>Show results</button>
+            </form>
 
-            <button type="button" onClick={drawBestSellersByFilter}>Отобразить результаты.</button>
-
-            <div>
-                {data ? drawBookHTML(loadedBooks) : "Данные загружаются!"}
+            <div className="articleContainer">
+                {data ? drawBookHTML(loadedBooks) : <p className="dataLoadingError">Data is loading... Reload the page if no information appears after 5 seconds.</p>}
             </div>
         </div>
     );
